@@ -2,6 +2,7 @@ import React from "react";
 import { MovementVm } from "../movement-list.vm";
 import classes from "./movement-list-table.component.module.css";
 import { MovementListItemComponent } from "./movement-list-item.component";
+import { TableHead } from "@/layouts/app/components/tableHead.component";
 
 interface Props {
   movementList: MovementVm[];
@@ -10,19 +11,20 @@ interface Props {
 
 export const MovementListTableComponent: React.FC<Props> = (props) => {
   const { movementList, defaultAccountId } = props;
+  const textSpanArray = [
+    "FECHA",
+    "FECHA VALOR",
+    "DESCRIPCIÓN",
+    "IMPORTE",
+    "SALDO DISPONIBLE",
+  ];
 
   if (movementList) {
     return (
       <>
         <div className={classes.gridContainer}>
           <div className={classes.gridTable}>
-            <div className={classes.headerTable}>
-              <span className={classes.headerCell}>FECHA</span>
-              <span className={classes.headerCell}>FECHA VALOR</span>
-              <span className={classes.headerCell}>DESCRIPCIÓN</span>
-              <span className={classes.headerCell}>IMPORTE</span>
-              <span className={classes.headerCell}>SALDO DISPONIBLE</span>
-            </div>
+            <TableHead textSpanArray={textSpanArray} />
 
             {movementList.map((movement) => (
               <MovementListItemComponent

@@ -8,7 +8,7 @@ import {
   mapAccountFromApiToVm,
   mapTransferFromVmToApi,
 } from "./transfer.mapper";
-
+import { HeaderContainerComponent } from "@/layouts/app/components/headerContainer.component";
 import classes from "./transfer.page.module.css";
 
 export const TransferPage: React.FC = () => {
@@ -35,8 +35,11 @@ export const TransferPage: React.FC = () => {
 
   return (
     <AppLayout>
-      <div className={classes.container}>
-        <h1 className={classes.title}>Transferencias Nacionales</h1>
+      <div className={classes.root}>
+        <HeaderContainerComponent
+          enableTitleHeaderContainer
+          titleHeaderContainer="Transferencias Nacionales"
+        ></HeaderContainerComponent>
         <TransferFormComponent
           accountList={accountList}
           onTransfer={handleTransfer}

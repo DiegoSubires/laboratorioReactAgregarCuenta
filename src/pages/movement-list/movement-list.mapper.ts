@@ -15,11 +15,12 @@ export const mapMovementListFromApiToVm = (
   }));
 
 export const mapAccountListFromApiToVm = (
-  accountList: apiModel.Account[]
-): viewModel.AccountVm[] =>
-  accountList.map((account) => ({
+  account: apiModel.Account
+): viewModel.AccountVm => {
+  return {
     id: account.id,
     alias: account.name,
     iban: account.iban,
     availableBalance: account.balance,
-  }));
+  };
+};

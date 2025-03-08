@@ -3,6 +3,7 @@ import { AppLayout } from "@/layouts";
 import { Account } from "./create-account.vm";
 
 import { CreateAccountFormComponent } from "./components";
+import { HeaderContainerComponent } from "@/layouts/app/components/headerContainer.component";
 import classes from "./create-account.page.module.css";
 
 import { saveNewAccount } from "./api";
@@ -23,9 +24,10 @@ export const AccountPage: React.FC = () => {
   return (
     <AppLayout>
       <div className={classes.root}>
-        <div className={classes.headerContainer}>
-          <h1>NUEVA CUENTA BANCARIA</h1>
-        </div>
+        <HeaderContainerComponent
+          enableTitleHeaderContainer
+          titleHeaderContainer="Nueva Cuenta Bancaria"
+        ></HeaderContainerComponent>
         <CreateAccountFormComponent onNewAccount={handleCreateAccount} />
       </div>
     </AppLayout>

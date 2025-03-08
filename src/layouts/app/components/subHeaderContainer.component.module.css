@@ -1,0 +1,11 @@
+.bold {
+  font-weight: 600;
+}
+.subheader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}

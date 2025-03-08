@@ -10,14 +10,13 @@ import {
   mapMovementListFromApiToVm,
 } from "./movement-list.mapper";
 import { useParams } from "react-router-dom";
+import { HeaderContainerComponent } from "@/layouts/app/components/headerContainer.component";
+import { SubHeaderContainerComponent } from "@/layouts/app/components/subHeaderContainer.component";
 
 export const MovementListPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const [account, setAccount] = React.useState<AccountVm[]>([]);
+  const [account, setAccount] = React.useState<AccountVm>();
   const [movementList, setMovementList] = React.useState<MovementVm[]>([]);
-  const saldo: number = 1000;
-  const alias: string = "Compartida";
-  const iban: string = "ES79 2100 0813 6101 2345 6789";
 
   if (id) {
     React.useEffect(() => {
@@ -30,110 +29,41 @@ export const MovementListPage: React.FC = () => {
     }, []);
   }
 
-  console.log(account);
-
   return (
     <AppLayout>
       <div className={classes.root}>
-        <div className={classes.headerContainer}>
-          <div>
-            {" "}
-            <h1>Saldos y Últimos movimientos</h1>
-          </div>
-          <div className={classes.balance}>
-            <span className={classes.bold}>SALDO DISPONIBLE</span>
-            <p className={`${classes.availableBalance} ${classes.bold}`}>
-              {saldo.toLocaleString("es-ES", {
+        {id == ":id" ? (
+          <HeaderContainerComponent textH2HeaderContainer="Debes seleccionar una cuenta en la pestaña MIS CUENTAS"></HeaderContainerComponent>
+        ) : (
+          <div className={classes.root}>
+            <HeaderContainerComponent
+              enableTitleHeaderContainer
+              titleHeaderContainer="Saldos y Últimos movimientos"
+              enableBalance
+              balance={account?.availableBalance.toLocaleString("es-ES", {
                 style: "currency",
                 currency: "EUR",
                 minimumFractionDigits: 0,
               })}
-            </p>
+            ></HeaderContainerComponent>
+            <SubHeaderContainerComponent
+              enableSubHeaderContainer
+              alias={account?.alias}
+              IBAN={account?.iban}
+            ></SubHeaderContainerComponent>
           </div>
-        </div>
-        <div className={`${classes.subheader} ${classes.bold}`}>
-          <h2>Alias: {alias}</h2>
-          <h2>IBAN: {iban}</h2>
-        </div>
-        <MovementListTableComponent
-          movementList={movementList}
-          defaultAccountId={id}
-        />
+        )}
+        {movementList.length != 0 ? (
+          <MovementListTableComponent
+            movementList={movementList}
+            defaultAccountId={id}
+          />
+        ) : id !== ":id" ? (
+          <> LA CUENTA NO TIENE MOVIMIENTOS</>
+        ) : (
+          <></>
+        )}
       </div>
     </AppLayout>
   );
 };
-
-/*
-  if (movementList) {
-    return (
-      <AppLayout>
-        <div className={classes.root}>
-          <div className={classes.headerContainer}>
-            <div>
-              {" "}
-              <h1>Saldos y Últimos movimientos</h1>
-              <h3>
-                SALDO DISPONIBLE:{" "}
-                {account.availableBalance.toLocaleString("es-ES", {
-                  style: "currency",
-                  currency: "EUR",
-                  minimumFractionDigits: 0,
-                })}
-              </h3>
-            </div>
-          </div>
-          <div>
-            <h2>{account.iban}</h2>
-            <h3>Alias: {account.alias}</h3>
-          </div>
-          <MovementListTableComponent
-            movementList={movementList}
-            defaultAccountId={id}
-          />
-        </div>
-      </AppLayout>
-    );
-  } else {
-    return (
-      <AppLayout>
-        <div className={classes.root}>
-          <SubheaderComponent titleSubheader="Saldos y Últimos movimientos"></SubheaderComponent>
-          <div>
-            <p>SALDO DISPONIBLE:</p>
-          </div>
-          <div className={classes.headerContainer}>
-            <div>
-              {" "}
-              <h1>Saldos y Últimos movimientos</h1>
-            </div>
-          </div>
-          <div></div>
-          <MovementListTableComponent
-            movementList={movementList}
-            defaultAccountId={id}
-          />
-        </div>
-      </AppLayout>
-    );
-  }
-*/
-
-/*account[0].availableBalance.toLocaleString("es-ES", {
-                style: "currency",
-                currency: "EUR",
-                minimumFractionDigits: 0,
-              })*/
-
-/*
-className={`${
-                account[0].availableBalance < 0 ? classes.negative : null
-              }`}
-              
-              
-              
-              {account[0].availableBalance.toLocaleString("es-ES", {
-                style: "currency",
-                currency: "EUR",
-                minimumFractionDigits: 0,
-              })}*/

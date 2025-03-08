@@ -8,6 +8,7 @@ import { getAccountList } from "./api";
 import { mapAccountListFromApiToVm } from "./account-list.mapper";
 import { useNavigate } from "react-router-dom";
 import { appRoutes } from "@/core/router";
+import { HeaderContainerComponent } from "@/layouts/app/components/headerContainer.component";
 
 export const AccountListPage: React.FC = () => {
   const [accountList, setAccountList] = React.useState<AccountVm[]>([]);
@@ -26,10 +27,13 @@ export const AccountListPage: React.FC = () => {
   return (
     <AppLayout>
       <div className={classes.root}>
-        <div className={classes.headerContainer}>
-          <h1>Mis cuentas</h1>
-          <button onClick={handleClick}>AGREGAR NUEVA CUENTA</button>
-        </div>
+        <HeaderContainerComponent
+          enableTitleHeaderContainer
+          titleHeaderContainer="Mis cuentas"
+          enableButton
+          onClick={handleClick}
+        ></HeaderContainerComponent>
+
         <AccountListTableComponent accountList={accountList} />
       </div>
     </AppLayout>
